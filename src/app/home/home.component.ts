@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { WebHookService } from '../web-hook.service';
-import { TuiNotificationsService } from '@taiga-ui/core';
 import { WebHookUpdate } from '../web-hook-update';
 
 @Component({
@@ -12,15 +11,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 webHookUpdate:Array<WebHookUpdate> = [];
 
-  constructor(private webHookService: WebHookService,
-    @Inject(TuiNotificationsService) private notificationsService: TuiNotificationsService) {
+  constructor(private webHookService: WebHookService) {
     this.webHookUpdate = []
-    this.notificationsService = notificationsService;
     this.webHookService.connect().subscribe((res) => {
       console.log("Web Socket Response in Component: " + res.data);
       let response = JSON.parse(res.data);
       if (response.clientId) {
-        this.showConnectedNotification(response);
+        alert(`Websocket is Connected! Client Id : ${response.clientId}`);
         console.log(this.webHookUpdate);
       }else{
         this.webHookUpdate.push({
@@ -39,11 +36,5 @@ webHookUpdate:Array<WebHookUpdate> = [];
     this.webHookService.close();
 }
 
-  showConnectedNotification(response:any) {
-    this.notificationsService
-      .show('Websocket is Connected!', {
-        label: 'Connected!',
-      }).subscribe();
-  }
 
 }

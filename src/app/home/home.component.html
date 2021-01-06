@@ -1,8 +1,5 @@
-<tui-accordion class="container">
-    <tui-accordion-item *ngFor="let update of webHookUpdate">
-        {{i}} {{update.msgHead}}
-        <ng-template tuiAccordionItemContent>
-            {{update.msgContent}}
-        </ng-template>
-    </tui-accordion-item>
-</tui-accordion>
+<div class="container" *ngFor="let update of webHookUpdate">
+    <span> {{update.msgHead}}
+        {{update.msgContent}}
+    </span>
+</div>
